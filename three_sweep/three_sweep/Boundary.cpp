@@ -2,6 +2,7 @@
 #include "Boundary.h"
 #include <cassert>
 #include <fstream>
+#include <ctime>
 using namespace std;
 
 const double ZEROTHRESHOLD = 0.000001;
@@ -23,50 +24,28 @@ vector<Vector2D> Boundary::calcIntersection(vector<Vector2D> v)
 	int cir_amount = edge.size();// the amount of circles
 	Vector2D p1(v[0]), p2(v[1]);
 	Vector2D p3, p4;
-	vector<vector<Vector2D> > candiate;//each circle takes up a dimension and each dimension has one or two intersections
-	int cand_id = -1;
+	vector<Vector2D> candiate;//candiate intersections on line(v[0], v[1])
 	//get all the intersections of each circle
 	for(int i=0;i<cir_amount;i++)
 	{
 		int inter_id = 0;
 		int length_edgei = edge[i].size();
-		for(int j=0;j<length_edgei;j++)
+		for(int j=0;j<length_edgei-1;j++)
 		{
 			p3 = edge[i][j];
-			p4 = edge[i][(j+1)%length_edgei]; // MayToBeChange: compulsory circle or not
+			p4 = edge[i][j+1]; // MayToBeChange: compulsory circle or not  Now is not compulsory to be circle
 			Vector2D intersection;
 			if(getSegmentIntersection(Hline(p1, p2), Hline(p3, p4), intersection))
 			{
-				cerr << i << ' '<< j << ' ' << cand_id << ' ' << inter_id << "  : (" << intersection.x << ',' << intersection.y << ")" << endl;
-				if(inter_id >= 2) //do not accept more than 2 intersections on one circle
+				if(candiate.size() > 0 && 
+					candiate[candiate.size()-1].x == intersection.x && candiate[candiate.size()].y == intersection.y)
 				{
-					if(abs(candiate[cand_id][inter_id-1].x - intersection.x) > ZEROTHRESHOLD || 
-					   abs(candiate[cand_id][inter_id-1].y - intersection.y) > ZEROTHRESHOLD   ) // ignore duplicated intersection
-					{
-						candiate.pop_back();
-						cand_id--;
-						inter_id = 0;
-						break;
-					}
-				}
-				else if(inter_id == 1)
-				{
-					if(abs(candiate[cand_id][inter_id-1].x - intersection.x) > ZEROTHRESHOLD || 
-					   abs(candiate[cand_id][inter_id-1].y - intersection.y) > ZEROTHRESHOLD   )// ignore duplicated intersection
-					{
-						candiate[cand_id].push_back(intersection);
-						inter_id++;
-					}
+					continue;
 				}
 				else
 				{
-					vector<Vector2D> newCand;
-					newCand.push_back(intersection);
-					candiate.push_back(newCand);
-					cand_id++;
-					inter_id++;
+					candiate.push_back(intersection);
 				}
-				//system("pause");
 			}
 		}
 	}
@@ -74,12 +53,9 @@ vector<Vector2D> Boundary::calcIntersection(vector<Vector2D> v)
 	cerr << "candiate: \n";
 	for(int i=0;i<candiate.size();i++)
 	{
-		for(int j=0;j<candiate[i].size();j++)
-		{
-			cerr << "(" << candiate[i][j].x << ',' << candiate[i][j].y << ")   ";
-		}
-		cerr << endl;
+		cerr << "(" << candiate[i].x << ',' << candiate[i].y << ")   ";
 	}
+	cerr << endl;
 
 	//select intersections and choose two intersections who is nearest to the v from interaction
 	double x_min = min(p1.x, p2.x);
@@ -87,92 +63,112 @@ vector<Vector2D> Boundary::calcIntersection(vector<Vector2D> v)
 	double x_max = max(p1.x, p2.x);
 	double y_max = max(p1.y, p2.y);
 	double delta_x = x_max - x_min;
-	double delta_x1_min = 100000000.0, delta_x2_min = 100000000.0, delta_x_min = 100000000.0;
-	int p1_id_min = -1; //p1_id_min: the intersection which is attach to p1.  used when length_candi == 2
-	int p_id_min = -1;//p_id_min: pi which is nearer the intersection.  used when length_candi == 1 
-	int choose1_id = -1, choose2_id = -1;//choosei_id: i = length_candi -- which item is the result candiate
+	double p1_min1, p1_min2, p2_min1, p2_min2; //pi_minj means the lessat j distance(x direction) to pi
+	int p1_min1_id, p1_min2_id, p2_min1_id, p2_min2_id;
+	p1_min1 = p1_min2 = p2_min1 = p2_min2 = 10000000.0;
+	p1_min1_id = p1_min2_id = p2_min1_id = p2_min2_id = -1;
+	Vector2D temp_p;
 	for(int i=0;i<candiate.size();i++)
 	{
-		int length_candi = candiate[i].size();
-		if(length_candi == 1)
+		temp_p = candiate[i];
+		double distance2p1 = abs(temp_p.x - p1.x);
+		double distance2p2 = abs(temp_p.x - p2.x);
+		if(distance2p1 < distance2p2)
 		{
-			Vector2D pp(candiate[i][0]);
-			//choose the nearest and the length does not vary more than 20%
-			if(abs(pp.x-p1.x) < delta_x_min && abs(pp.x-p1.x)/delta_x < 0.2)
+			if(distance2p1 < p1_min1)
 			{
-				delta_x_min = abs(pp.x-p1.x);
-				p_id_min = 1;
-				choose1_id = i;
+				p1_min1 = distance2p1;
+				p1_min1_id = i;
 			}
-			else if(abs(pp.x-p2.x) < delta_x_min && abs(pp.x-p2.x)/delta_x < 0.2)
+			else if(distance2p1 < p1_min2)
 			{
-				delta_x_min = abs(pp.x-p2.x);
-				p_id_min = 2;
-				choose1_id = i;
+				p1_min2 = distance2p1;
+				p1_min2_id = i;
 			}
 		}
-		else if(length_candi == 2)
+		else
 		{
-			Vector2D pp1(candiate[i][0]), pp2(candiate[i][1]);
-			double temp_min1, temp_min2;
-			double temp_p1_id_min, temp_p2_id_min;
-			if(abs(p1.x-pp1.x) < abs(p1.x-pp2.x))
+			if(distance2p2 < p2_min1)
 			{
-				temp_min1 = abs(p1.x-pp1.x);
-				temp_min2 = abs(p2.x-pp2.x);
-				temp_p1_id_min = 1;
+				p2_min1 = distance2p2;
+				p2_min1_id = i;
 			}
-			else
+			else if(distance2p2 < p2_min2)
 			{
-				temp_min1 = abs(p1.x-pp2.x);
-				temp_min2 = abs(p2.x-pp1.x);
-				temp_p1_id_min = 2;
-			}
-			//choose the nearest and the length does not vary more than 20%
-			if(temp_min1 + temp_min2 < delta_x2_min && abs(pp1.x-pp2.x)/delta_x > 0.8)
-			{
-				delta_x2_min = temp_min1 + temp_min2;
-				choose2_id = i;
-				p1_id_min = temp_p1_id_min;
+				p2_min2 = distance2p2;
+				p2_min2_id = i;
 			}
 		}
 	}
 
 	vector<Vector2D> result;
-	if(choose2_id != -1)
-	{
-		if(p1_id_min == 1)
-		{
-			result.push_back(candiate[choose2_id][0]);
-			result.push_back(candiate[choose2_id][1]);
-		}
-		else
-		{
-			result.push_back(candiate[choose2_id][1]);
-			result.push_back(candiate[choose2_id][0]);
-		}
-	}
-	else if(choose1_id != -1)
-	{
-		Vector2D center((v[0].x+v[1].x)/2, (v[0].y+v[1].y)/2);
-		Vector2D another_intersection;
-		another_intersection.x = 2 * center.x - candiate[choose1_id][0].x;
-		another_intersection.y = 2 * center.y - candiate[choose1_id][0].y;
-		if(p_id_min == 1)
-		{
-			result.push_back(candiate[choose1_id][0]);
-			result.push_back(another_intersection);
-		}
-		else
-		{
-			result.push_back(another_intersection);
-			result.push_back(candiate[choose1_id][0]);
-		}
-	}
-	else
+	if(p1_min1 == -1 && p2_min1 == -1) //no intersection found
 	{
 		result.push_back(v[0]);
 		result.push_back(v[1]);
+	}
+	else if(p1_min1 == -1) //just one intersection is found which nearer p2
+	{
+		if(p2_min1*2 / delta_x > 0.2) // demand that the length of adjacent profiles does not vary more than 20% 
+		{
+			result.push_back(v[0]);
+			result.push_back(v[1]);
+		}
+		else
+		{
+			Vector2D center;
+			center = (v[0] + v[1]) * 0.5;
+			Vector2D another_point;
+			another_point = center * 2 - candiate[p2_min1_id];
+			result.push_back(another_point);
+			result.push_back(candiate[p2_min1_id]);
+		}
+	}
+	else if(p2_min1 == -1) //just one intersection is found which nearer p1
+	{
+		if(p1_min1*2 / delta_x > 0.2) // demand that the length of adjacent profiles does not vary more than 20% 
+		{
+			result.push_back(v[0]);
+			result.push_back(v[1]);
+		}
+		else
+		{
+			Vector2D center;
+			center = (v[0] + v[1]) * 0.5;
+			Vector2D another_point;
+			another_point = center * 2 - candiate[p1_min1_id];
+			result.push_back(another_point);
+			result.push_back(candiate[p1_min1_id]);
+		}
+	}
+	else // two intersections are found
+	{
+		// demand that the length of adjacent profiles does not vary more than 20% 
+		if(abs(candiate[p1_min1_id].x - candiate[p2_min1_id].x) / delta_x > 0.8)
+		{
+			result.push_back(candiate[p1_min1_id]);
+			result.push_back(candiate[p2_min1_id]);
+		}
+		else if(abs(candiate[p1_min2_id].x - candiate[p2_min1_id].x) / delta_x > 0.8)
+		{
+			result.push_back(candiate[p1_min2_id]);
+			result.push_back(candiate[p2_min1_id]);
+		}
+		else if(abs(candiate[p1_min1_id].x - candiate[p2_min2_id].x) / delta_x > 0.8)
+		{
+			result.push_back(candiate[p1_min1_id]);
+			result.push_back(candiate[p2_min2_id]);
+		}
+		else if(abs(candiate[p1_min2_id].x - candiate[p2_min2_id].x) / delta_x > 0.8)
+		{
+			result.push_back(candiate[p1_min2_id]);
+			result.push_back(candiate[p2_min2_id]);
+		}
+		else
+		{
+			result.push_back(v[0]);
+			result.push_back(v[1]);
+		}
 	}
 
 	return result;
@@ -303,7 +299,7 @@ bool Boundary::setCycleGraph(std::vector<std::vector<Vector2D> > e)
 //////////////////////////////////////////////////////////////////////////////////////
 void Boundary::test_getSegmentIntersection()
 {
-	ifstream fin("zcycle.txt");
+	ifstream fin("data/1029141_curve_line1.txt");
 	int cycle_amount;
 	fin >> cycle_amount;
 	vector<pair<int, vector<Vector2D> > > edge;
@@ -314,6 +310,8 @@ void Boundary::test_getSegmentIntersection()
 		edge.push_back(p);
 	}
 
+	clock_t start, next, finish;
+	start = clock();
 	Vector2D v;
 	vector<vector<Vector2D> > e;
 	for(int i=0;i<cycle_amount;i++)
@@ -326,28 +324,34 @@ void Boundary::test_getSegmentIntersection()
 		}
 		e.push_back(edge[i].second);
 	}
-	cerr << "read file finish...\n";
-
+	finish = clock();
+	cerr << "read file finish...   time: " << double(finish-start)/1000.0 << "s\n\n";
+	
 	
 	cerr << "cycle amount = " << cycle_amount << endl;
 	for(int i=0;i<cycle_amount;i++)
 	{
 		cerr << "vertex amount = " << edge[i].first << endl;
-		for(int j=0;j<edge[i].first;j++)
+		/*for(int j=0;j<edge[i].first;j++)
 		{
 			cerr << "(" << e[i][j].x << ',' << e[i][j].y << ")  ";
 		}
-		cerr << endl;
+		cerr << endl;*/
 	}
 	cerr << "--------------------------" << endl;
-
+	//system("pause");
 	setCycleGraph(e);
 
 	vector<Vector2D> points;
-	points.push_back(Vector2D(0.9,4.1));
-	points.push_back(Vector2D(3.3,1.7));
+	points.push_back(Vector2D(314, 233));
+	points.push_back(Vector2D(340, 349));
 
+	next = clock();
 	vector<Vector2D> res = calcIntersection(points);
+	finish = clock();
+	cerr << "calcIntersection finish...   time: " 
+		 << double(finish-next)/1000.0 
+		 << "s   total time: " << double(finish-start)/1000.0 << "s\n";
 
 	cerr << "-------------------------\n";
 	cerr << "result: \n";
