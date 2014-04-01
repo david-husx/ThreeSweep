@@ -1,22 +1,27 @@
 #include "library.h"
 #include "Boundary.h"
+#include "CurveExtraction\CmCurveEx.h"
 #include <cassert>
 #include <fstream>
 #include <ctime>
+
 using namespace std;
 
 const double ZEROTHRESHOLD = 0.000001;
 
-void Boundary::init()
+void Boundary::init(const string &imgName)
 {
-
+	Mat client_img = imread(imgName, CV_LOAD_IMAGE_GRAYSCALE);
+	CmCurveEx::edge2vector(client_img, true, this->edge);
 }
 
-/***************************************
+/***********************************************************************
 * This function is used to obtain exact intersection whose distance is the nearest to v
 * @para v: two likely intersection given from interaction
 * return value: two exact intersections whose sequence is same as v
-***************************************/
+* Author: Hu Sixing
+* Date: Mar. 26th. 2014
+************************************************************************/
 vector<Vector2D> Boundary::calcIntersection(vector<Vector2D> v)
 {
 	assert(v.size() == 2);
@@ -174,14 +179,16 @@ vector<Vector2D> Boundary::calcIntersection(vector<Vector2D> v)
 	return result;
 }
 
-/***************************************
+/************************************************************************
 * private
 * This function is used to obtain the point of intersection of segment line line1 and line line2
 * @para line1: segment
 * @para line2: line
 * @para intersection: intersection of two segments [return]
 * return value: whether the two segments intersect or not
-***************************************/
+* Author: Hu Sixing
+* Date: Mar. 26th. 2014
+************************************************************************/
 bool Boundary::getSegmentIntersection(Hline line1, Hline line2, Vector2D &intersection)
 {
 	Vector2D p1(line1.first), p2(line1.second), p3(line2.first), p4(line2.second);
@@ -299,8 +306,11 @@ bool Boundary::setCycleGraph(std::vector<std::vector<Vector2D> > e)
 //////////////////////////////////////////////////////////////////////////////////////
 void Boundary::test_getSegmentIntersection()
 {
-	ifstream fin("data/1029141_curve_line1.txt");
-	int cycle_amount;
+	clock_t start, next, finish;
+	start = clock();
+
+	string filename("data/1029141_curve.png");
+	/*int cycle_amount;
 	fin >> cycle_amount;
 	vector<pair<int, vector<Vector2D> > > edge;
 	for(int i=0;i<cycle_amount;i++)
@@ -326,21 +336,28 @@ void Boundary::test_getSegmentIntersection()
 	}
 	finish = clock();
 	cerr << "read file finish...   time: " << double(finish-start)/1000.0 << "s\n\n";
-	
-	
-	cerr << "cycle amount = " << cycle_amount << endl;
-	for(int i=0;i<cycle_amount;i++)
+	*/
+
+	next = clock();
+	init(filename);
+	finish = clock();
+	cerr << "\nBoundary::init finish...   time: " 
+		 << double(finish-next)/1000.0 
+		 << "s   total time: " << double(finish-start)/1000.0 << "s\n\n";
+
+	cerr << "cycle amount = " <<edge.size() << endl;
+	/*for(int i=0;i<edge.size();i++)
 	{
-		cerr << "vertex amount = " << edge[i].first << endl;
-		/*for(int j=0;j<edge[i].first;j++)
+		cerr << "vertex amount = " << edge[i].size() << endl;
+		for(int j=0;j<edge[i].size()-1;j+=2)
 		{
-			cerr << "(" << e[i][j].x << ',' << e[i][j].y << ")  ";
+			cerr << "(" << edge[i][j] << ',' << edge[i][j+1] << ")  ";
 		}
-		cerr << endl;*/
+		cerr << endl;
 	}
-	cerr << "--------------------------" << endl;
+	cerr << "--------------------------" << endl;*/
 	//system("pause");
-	setCycleGraph(e);
+	//setCycleGraph(e);
 
 	vector<Vector2D> points;
 	points.push_back(Vector2D(314, 233));
@@ -349,7 +366,7 @@ void Boundary::test_getSegmentIntersection()
 	next = clock();
 	vector<Vector2D> res = calcIntersection(points);
 	finish = clock();
-	cerr << "calcIntersection finish...   time: " 
+	cerr << "\nBoundary::calcIntersection finish...   time: " 
 		 << double(finish-next)/1000.0 
 		 << "s   total time: " << double(finish-start)/1000.0 << "s\n";
 
