@@ -38,7 +38,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\OpenCV-2.4.4\opencv\build\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\OpenCV-2.4.4\opencv\build\x86\vc11\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -63,6 +66,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Boundary.cpp" />
+    <ClCompile Include="CurveExtraction\CmCurveEx.cpp" />
+    <ClCompile Include="CurveExtraction\CurveExtractionstdafx.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +75,8 @@
     <ClInclude Include="Boundary.h" />
     <ClInclude Include="Compute3D.h" />
     <ClInclude Include="Control.h" />
+    <ClInclude Include="CurveExtraction\CmCurveEx.h" />
+    <ClInclude Include="CurveExtraction\CurveExtractionStdafx.h" />
     <ClInclude Include="CyliEdgeSample.h" />
     <ClInclude Include="EdgeSample.h" />
     <ClInclude Include="library.h" />
