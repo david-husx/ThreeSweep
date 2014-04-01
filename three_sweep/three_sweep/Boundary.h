@@ -3,10 +3,15 @@
 
 #include "library.h"
 
+/***********************************************************************
+* This class is used to find exact boundary
+* Author: Hu Sixing
+* Date  : mar. 26th. 2014
+************************************************************************/
 class Boundary
 {
 public:
-	void init();
+	void init(const std::string &imgName);
 	std::vector<Vector2D> calcIntersection(std::vector<Vector2D> v); 
 	bool setCycleGraph(std::vector<std::vector<Vector2D> >);
 
