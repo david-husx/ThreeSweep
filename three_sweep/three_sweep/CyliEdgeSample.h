@@ -8,24 +8,27 @@
 
 class CyliEdgeSample: public EdgeSample{
 public:
+	CyliEdgeSample(){}
 	void init(std::vector<Vector3D> v);
-	CyliEdgeSample* getNextEdge();
+	CyliEdgeSample clone();
 	void sample();
-	void std::vector<Vector3D> getSample();
-	void setSampleNum(int num) { sampleNum = num; }
+	std::vector<Vector2D> getSample(){ return samples; }
 
-private:
+	double getA() { return a; }
+	double getB() { return b; }
+
+	void setA(double A) { a = A; }
+	void setB(double B) { b = B; }
+
+	void clear(){ samples.clear(); }
+
 	std::vector<Vector2D> samples;  
-	Vector2D center;   
-	Vector2D normal;   
+private:
 
 	double a;  // two arguments for a ellipse 
 	double b;
 
-	static int sampleNum;
 	Vector2D getEllipsePoint(int i);
 };
-
-int CyliEdgeSample::sampleNum;
 
 #endif

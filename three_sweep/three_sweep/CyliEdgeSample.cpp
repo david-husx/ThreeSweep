@@ -1,25 +1,38 @@
 #include "CyliEdgeSample.h"
 
 void CyliEdgeSample::init(std::vector<Vector2D> v){
-	std::vector<Vector2D> cross = bounday->intersection(v);
-	endPoint[0] = cross[0];
-	endPoint[1] = cross[1];
-	center = (endPoint[0] + endPoint[1])/2;
-	a = endPoint[0].distanceTo(endPoint[1])/2;
+	endpoint = bounday->intersection(v);
+	center = (endpoint[0] + endpoint[1])/2;
+	a = endpoint[0].distanceTo(endpoint[1])/2;
 
-	normal = cross[0] - cross[1];
+	normal = endpoint[1] - endpoint[0];
 	normal.normalize();
 	normal = normal.getNormal();
 
 	std::vector<Vector2D> v2;
 	v2.push_back(v[1]);
 	v2.push_back(v[2]);
-	cross = bounday->intersection(v2);
-	b = corss[1].distanceTo(center)/2;
+	v2 = bounday->intersection(v2);
+	b = v2[1].distanceTo(center)/2;
 
-	for (int i=0; i<24; i++){
+	if (normal*(v2[1] - v2[0]) > 0){
+		normal *= -1;
+	}
+	sample();
+}
+
+void CyliEdgeSample::sample(){
+	double t = b/a;
+	a = endpoint[0].distanceTo(endpoint[1])/2;
+	b = t*a;
+
+	for (int i=0; i<sampleNum; i++){
 		Vector2D p = getEllipsePoint(i);
-		samples.push_back(p);
+		// someting may be done to make it faster here
+		angle = atan(normal.x/normal.y);
+		Vector2D sample(p.x*cos(angle)-p.y*sin(angle), 
+						p.x*sin(angle)+p.y*cos(angle));
+		samples.push_back(sample+center);
 	}
 }
 
@@ -38,3 +51,13 @@ Vector2D CyliEdgeSample::getEllipsePoint(int i){
 }
 
 
+CyliEdgeSample CyliEdgeSample::clone(){
+	CyliEdgeSample ces;
+	ces.setCenter(center);
+	ces.setNormal(normal);
+	ces.setA(a);
+	ces.setB(b);
+	ces.setEndpoint(endpoint);
+
+	return ces;
+}
