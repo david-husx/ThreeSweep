@@ -4,7 +4,7 @@ using namespace std;
 
 InvCamera::InvCamera()
 {
-	calPara(5, 20, 1);
+	calPara(5, 20, 8);
 }
 
 /***********************************************************************
@@ -40,6 +40,10 @@ vector<Vector3D> InvCamera::twoD2threeD(vector<Vector2D> points)
 	for(int i=1;i<4;i++)
 		if(zm[i] < 0)
 			zm[i] = zm[i] * (-1);
+	for(int i=0;i<4;i++)
+	{
+		cerr << "zm[" << i << "] = " << zm[i] << endl;
+	}
 	//
 
 	vector<Vector3D> wc; //world coordinate

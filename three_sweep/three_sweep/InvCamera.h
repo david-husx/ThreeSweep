@@ -1,7 +1,7 @@
 #ifndef _INVCAMERA_H_
 #define _INVCAMERA_H_
 
-#include "Basic.h"
+//#include "Basic.h"
 #include "library.h"
 
 /***********************************************************************
@@ -20,6 +20,6 @@ private:
 
 	double n, u, v;
 	double zr;
-}
+};
 
 #endif

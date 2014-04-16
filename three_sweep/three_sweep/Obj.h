@@ -14,16 +14,16 @@ public:
 
 	void setSampleNum(int n) { sampleNum = n;}
 	void setHigth(int h) { sceneHight = h;}
-	void setWidth(int w) { setWidth = w; }
+	void setWidth(int w) { sceneWidth = w; }
 private:
 	void display();
 	int sampleNum;
 	int sceneHight;
 	int sceneWidth;
 
-	std::vector<Triangle> triangles;
+	//std::vector<Triangle> triangles;
 	std::vector<Vector3D> topEdge;
 
-	Triangle getTriangle(Vector3D&, Vector3D&, Vector3D&);
+	//Triangle getTriangle(Vector3D&, Vector3D&, Vector3D&);
 };
 #endif
