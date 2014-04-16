@@ -1,6 +1,7 @@
 #include "library.h"
 #include "Boundary.h"
 #include "CurveExtraction\CmCurveEx.h"
+#include "EdgeExtraction.h"
 #include <cassert>
 #include <fstream>
 #include <ctime>
@@ -12,6 +13,7 @@ const double ZEROTHRESHOLD = 0.000001;
 void Boundary::init(const string &imgName)
 {
 	Mat client_img = imread(imgName, CV_LOAD_IMAGE_GRAYSCALE);
+	EdgeExtraction::extract(client_img);
 	CmCurveEx::edge2vector(client_img, true, this->edge);
 }
 
@@ -309,7 +311,7 @@ void Boundary::test_getSegmentIntersection()
 	clock_t start, next, finish;
 	start = clock();
 
-	string filename("data/1029141_curve.png");
+	string filename("data/1221016.png");
 	/*int cycle_amount;
 	fin >> cycle_amount;
 	vector<pair<int, vector<Vector2D> > > edge;

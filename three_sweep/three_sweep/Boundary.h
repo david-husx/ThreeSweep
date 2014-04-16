@@ -6,7 +6,7 @@
 /***********************************************************************
 * This class is used to find exact boundary
 * Author: Hu Sixing
-* Date  : mar. 26th. 2014
+* Date  : Mar. 26th. 2014
 ************************************************************************/
 class Boundary
 {
