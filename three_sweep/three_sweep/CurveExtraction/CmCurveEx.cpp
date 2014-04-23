@@ -521,7 +521,7 @@ void CmCurveEx::edge2vector(const Mat &img1u, bool isCartoon, vector<vector<Vect
 	edge.clear();
 	vector<Vector2D> temp_aline;
 	Vector2D temp_point;
-	for(int i=0;i<edges.size();i++)
+	for(unsigned int i=0;i<edges.size();i++)
 	{
 		temp_aline.clear();
 		for(int j=0;j<edges[i].pointNum;j++)

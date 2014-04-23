@@ -1,19 +1,27 @@
-﻿生成启动时间为 2014/3/26 15:59:57。
+﻿生成启动时间为 2014/4/23 14:22:08。
      1>项目“E:\Tsinghua-Tencent Lab\3-Sweep\gitcode\threesweep\three_sweep\three_sweep\three_sweep.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Boundary.cpp
-         Boundary.cpp
-     1>e:\tsinghua-tencent lab\3-sweep\gitcode\threesweep\three_sweep\three_sweep\boundary.cpp(75): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\tsinghua-tencent lab\3-sweep\gitcode\threesweep\three_sweep\three_sweep\boundary.cpp(77): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\tsinghua-tencent lab\3-sweep\gitcode\threesweep\three_sweep\three_sweep\boundary.cpp(94): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\tsinghua-tencent lab\3-sweep\gitcode\threesweep\three_sweep\three_sweep\boundary.cpp(118): warning C4101: “temp_p2_id_min”: 未引用的局部变量
-     1>e:\tsinghua-tencent lab\3-sweep\gitcode\threesweep\three_sweep\three_sweep\boundary.cpp(354): warning C4018: “<”: 有符号/无符号不匹配
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Transform\CyliEdgeSample.cpp Transform\InvCamera.cpp main.cpp
+         main.cpp
+         InvCamera.cpp
+         CyliEdgeSample.cpp
+         正在生成代码...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Tsinghua-Tencent Lab\3-Sweep\gitcode\threesweep\three_sweep\Debug\three_sweep.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\Tsinghua-Tencent Lab\3-Sweep\gitcode\threesweep\three_sweep\Debug\three_sweep.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Tsinghua-Tencent Lab\3-Sweep\gitcode\threesweep\three_sweep\Debug\three_sweep.lib" /MACHINE:X86 Debug\Boundary.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Tsinghua-Tencent Lab\3-Sweep\gitcode\threesweep\three_sweep\Debug\three_sweep.exe" /INCREMENTAL /NOLOGO opencv_contrib244d.lib opencv_core244d.lib opencv_features2d244d.lib opencv_highgui244d.lib opencv_imgproc244d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\Tsinghua-Tencent Lab\3-Sweep\gitcode\threesweep\three_sweep\Debug\three_sweep.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Tsinghua-Tencent Lab\3-Sweep\gitcode\threesweep\three_sweep\Debug\three_sweep.lib" /MACHINE:X86 Debug\Basic.obj
+         Debug\Control.obj
+         Debug\CmCurveEx.obj
+         Debug\CurveExtractionstdafx.obj
          Debug\main.obj
+         Debug\Boundary.obj
+         Debug\Compute3D.obj
+         Debug\CyliEdgeSample.obj
+         Debug\EdgeExtraction.obj
+         Debug\EdgeSample.obj
+         Debug\InvCamera.obj
+         Debug\Obj.obj
          three_sweep.vcxproj -> E:\Tsinghua-Tencent Lab\3-Sweep\gitcode\threesweep\three_sweep\Debug\three_sweep.exe
      1>已完成生成项目“E:\Tsinghua-Tencent Lab\3-Sweep\gitcode\threesweep\three_sweep\three_sweep\three_sweep.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:01.08
+已用时间 00:00:04.60

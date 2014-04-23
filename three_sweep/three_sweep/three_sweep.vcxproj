@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{DD18F457-8247-46E9-9659-16A3B02B05A0}</ProjectGuid>
+    <ProjectGuid>{551E777E-66ED-4909-9344-A49B9C2FF9CA}</ProjectGuid>
     <RootNamespace>three_sweep</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -49,6 +49,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opencv_contrib244d.lib;opencv_core244d.lib;opencv_features2d244d.lib;opencv_highgui244d.lib;opencv_imgproc244d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -62,25 +63,35 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>opencv_contrib244d.lib;opencv_core244d.lib;opencv_features2d244d.lib;opencv_highgui244d.lib;opencv_imgproc244d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Boundary.cpp" />
-    <ClCompile Include="CurveExtraction\CmCurveEx.cpp" />
-    <ClCompile Include="CurveExtraction\CurveExtractionstdafx.cpp" />
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Basic.h" />
-    <ClInclude Include="Boundary.h" />
-    <ClInclude Include="Compute3D.h" />
+    <ClInclude Include="Basic\Basic.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="CurveExtraction\CmCurveEx.h" />
     <ClInclude Include="CurveExtraction\CurveExtractionStdafx.h" />
-    <ClInclude Include="CyliEdgeSample.h" />
-    <ClInclude Include="EdgeSample.h" />
-    <ClInclude Include="library.h" />
-    <ClInclude Include="Obj.h" />
+    <ClInclude Include="Transform\Boundary.h" />
+    <ClInclude Include="Transform\Compute3D.h" />
+    <ClInclude Include="Transform\CyliEdgeSample.h" />
+    <ClInclude Include="Transform\EdgeExtraction.h" />
+    <ClInclude Include="Transform\EdgeSample.h" />
+    <ClInclude Include="Transform\InvCamera.h" />
+    <ClInclude Include="Transform\Obj.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Basic\Basic.cpp" />
+    <ClCompile Include="Control.cpp" />
+    <ClCompile Include="CurveExtraction\CmCurveEx.cpp" />
+    <ClCompile Include="CurveExtraction\CurveExtractionstdafx.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Transform\Boundary.cpp" />
+    <ClCompile Include="Transform\Compute3D.cpp" />
+    <ClCompile Include="Transform\CyliEdgeSample.cpp" />
+    <ClCompile Include="Transform\EdgeExtraction.cpp" />
+    <ClCompile Include="Transform\EdgeSample.cpp" />
+    <ClCompile Include="Transform\InvCamera.cpp" />
+    <ClCompile Include="Transform\Obj.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

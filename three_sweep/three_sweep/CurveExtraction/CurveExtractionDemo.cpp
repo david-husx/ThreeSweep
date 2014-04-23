@@ -7,8 +7,6 @@
 /*      in The 5th Joint Conference on Harmonious Human Machine			*/
 /*      Environment (HHME), 2009, pp. 13-20.							*/
 /************************************************************************/
-
-#include "stdafx.h"
 #include "CmCurveEx.h"
 
 int main(int argc, char* argv[])

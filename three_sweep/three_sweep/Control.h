@@ -1,58 +1,62 @@
-#ifndef CONTROL_H
-#define	CONTROL_H
+#ifndef  CONTROL_H
+#define	 CONTROL_H
 
-#include "EdgeSample.h"
-#include "CyliEdgeSample.h"
-#include "library.h"
+#include "Basic\Basic.h"
+#include "Transform\Boundary.h"
+#include "Transform\Compute3D.h"
+#include "Transform\CyliEdgeSample.h"
+#include "Transform\Obj.h"
+
+enum Instruct  {SETIMAGE, DRAW, DRAG, ROTATE};
+enum Status {STRAIGHT, BEND};
+enum BottomShape  { CIRCLE, SQUARE};
 
 class Control{
 public:
 	Control(){
 		obj = new Obj;
 		topEdge = NULL;
-		compute3D = new Compute3D;		
+		translator = new Compute3D;		
+		translator->init(10, 800);
 	}
 	~Control(){
-		delete compute3D;
+		delete translator;
 		delete obj;
 		delete topEdge;
+		delete boundary;
 	}
-	/*void control(Instruct is){
-		switch is{
-			case draw:
-				break;
-			case drag:
-				break;
-			case rotate:
-				break;
-			default:
-				break;
-		}
-	}*/
 
-	EdgeSample getNewEdge(Vector2D &mousePosition);
-	void initBoundary(){
-		boundary = new Boundary;
-		boundary->init();
+	void control(char* buffer){
 	}
-	void setStatus(Status &s) { status = s; }
+
+	EdgeSample* getNewEdge(Vector2D &mousePosition);
+
+	void setImage(char* filename) {}
+	void buildObj(Vector2D &mousePosition);
+	void initBoundary(char* filename){
+		boundary = new Boundary;
+		boundary->init(string(filename));
+	}
+
+	void setInstruct(Instruct i) { instruct = i; }
+	void setStatus(Status s) { status = s; }
 	void setFirstEdge(std::vector<Vector2D> &v);
 	void setBottomShape(BottomShape b) { bottomShape = b; }
 
-	Obj* getObj() { return &obj; }
-	void objAddSample() { obj.insertSample(compute3D->compute3D(topEdge->getSample())); }
+	Obj* getObj() { return obj; }
+
+	void debugShow();
+
+	
 private:
 	Status status;
+	Instruct instruct;
 	BottomShape bottomShape;
 	Obj* obj;
-	Vector2D oldMoustPosition;
 	EdgeSample* topEdge;
-	Compute3D* compute3D;
+	Compute3D* translator;
+	Vector2D oldMousePosition;
 	Boundary* boundary;
-
-	enum Instruct = {draw, drag, rotate};
-	enum Status = {straight, bend};
-	enum BottomShape = { circle, square};
-}；
+};
 
 #endif

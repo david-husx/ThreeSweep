@@ -28,6 +28,7 @@ using namespace std;
 
 // OpenCV
 #include <opencv2/opencv.hpp> //OpenCV 2.4
+/*
 #ifdef _DEBUG
 #pragma comment(lib, "opencv_core244d.lib")
 #pragma comment(lib, "opencv_highgui244d.lib")
@@ -37,6 +38,19 @@ using namespace std;
 #pragma comment(lib, "opencv_highgui244.lib")
 #pragma comment(lib, "opencv_imgproc244.lib")
 #endif // _DEBUG
+*/
+
+/*
+#ifdef _DEBUG
+#pragma comment(lib, "opencv_core231d.lib")
+#pragma comment(lib, "opencv_highgui231d.lib")
+#pragma comment(lib, "opencv_imgproc231d.lib")
+#else
+#pragma comment(lib, "opencv_core231.lib")
+#pragma comment(lib, "opencv_highgui231.lib")
+#pragma comment(lib, "opencv_imgproc231.lib")
+#endif // _DEBUG
+*/
 
 using namespace cv;
 

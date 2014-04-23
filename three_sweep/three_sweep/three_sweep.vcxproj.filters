@@ -15,37 +15,76 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Boundary.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Boundary.h">
+    <ClInclude Include="Basic\Basic.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Compute3D.h">
+    <ClInclude Include="CurveExtraction\CmCurveEx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CurveExtraction\CurveExtractionStdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform\Boundary.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform\Compute3D.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform\CyliEdgeSample.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform\EdgeSample.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform\EdgeExtraction.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Control.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="CyliEdgeSample.h">
+    <ClInclude Include="Transform\Obj.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="EdgeSample.h">
+    <ClInclude Include="Transform\InvCamera.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="library.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Obj.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Transform\Boundary.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform\Compute3D.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform\CyliEdgeSample.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform\EdgeSample.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CurveExtraction\CmCurveEx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CurveExtraction\CurveExtractionstdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic\Basic.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform\EdgeExtraction.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Control.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform\Obj.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform\InvCamera.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
